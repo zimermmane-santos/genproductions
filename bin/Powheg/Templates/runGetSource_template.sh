@@ -196,7 +196,7 @@ NEWRPATH2=`ls /cvmfs/cms.cern.ch/$${SCRAM_ARCH}/external/zlib-x86_64/*/* | grep 
 NEWRPATH2=$${NEWRPATH2%?}
 
 # Add python3 for ggHH 
-if [[ $$process == "ggHH" || $$process == "ggHH_SMEFT" ]]; then
+if [[ $$process == "ggHH" || $$process == "ggHH_SMEFT" || $$process == "ttJ_MiNNLO" ]]; then
   export MYLIBDIR=`scram tool info python3 | grep LIBDIR | sed -e s%LIBDIR=%%` 
   export MYLIB=`scram tool info python3 | grep 'LIB=' | sed -e s%LIB=%%`
   echo "RPATHLIBS= -Wl,-rpath,$${NEWRPATH1} -L$${NEWRPATH1} -lgfortran -lstdc++ -Wl,-rpath,$${NEWRPATH2} -L$${NEWRPATH2} -lz -L$${MYLIBDIR} -l$${MYLIB}" >> tmpfile
@@ -243,10 +243,11 @@ $patch_0
 
 export PYTHONPATH=./Virtual/:$$PYTHONPATH
 export MYINCLUDE=`scram tool info python3 | grep INCLUDE | sed -e s%INCLUDE=%%` 
-if [[ $$process == "ggHH" || $$process == "ggHH_SMEFT" ]]; then
+if [[ $$process == "ggHH" || $$process == "ggHH_SMEFT" || $$process == "ttJ_MiNNLO" ]]; then
     export C_INCLUDE_PATH=$$C_INCLUDE_PATH:$${MYINCLUDE}
 fi
 
+# exit 0 #stopped by andre
 make pwhg_main || fail_exit "Failed to compile pwhg_main"
 
 mkdir -p $${WORKDIR}/$${name}

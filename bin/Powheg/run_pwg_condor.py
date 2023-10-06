@@ -195,11 +195,14 @@ def runParallelXgrid(parstage, xgrid, folderName, nEvents, njobs, powInputName, 
 
     if QUEUE == 'none':
         print 'Direct running... #'+str(i)+' \n'
+        os.system('pwd')
         os.system('cd '+rootfolder+'/'+folderName)
+        print 'cd '+rootfolder+'/'+folderName
+        os.system('pwd')
 
         for i in range (0, njobs) :
             jobID = jobtag + '_' + str(i)
-            os.system('bash run_'+jobID+'.sh &')
+            os.system('bash '+rootfolder+'/'+folderName+'/'+'run_'+jobID+'.sh &')
 
     else:
         print 'Submitting to condor queues:  \n'

@@ -21,32 +21,35 @@ Index: Makefile
  #
  #
  ifeq ("$(COMPILER)","gnu")
-@@ -56,21 +57,22 @@
+@@ -55,21 +56,23 @@
+ #CXX = g++-9
  #CC = gcc-9
  #F77 = $(FC) -fno-automatic -ffixed-line-length-none
- #F77 = $(FC) -ffixed-line-length-none -ffree-line-length-none -fbounds-check -fno-align-commons
--F77=gfortran -std=legacy -ffixed-line-length-none -ffree-line-length-none -fbounds-check -fno-align-commons -fdec-static -fno-automatic
+-F77 = $(FC) -ffixed-line-length-none -ffree-line-length-none -fbounds-check -fno-align-commons
++#F77 = $(FC) -ffixed-line-length-none -ffree-line-length-none -fbounds-check -fno-align-commons
 +#F77=gfortran -std=legacy -std=legacy -std=legacy -std=legacy -std=legacy -std=legacy -ffixed-line-length-none -ffree-line-length-none -fbounds-check -fno-align-commons -fdec-static -fno-automatic
 +F77=gfortran -std=legacy -std=legacy -std=legacy -std=legacy -std=legacy -ffixed-line-length-none -ffree-line-length-none -fbounds-check -fno-align-commons -fdec-static -fno-automatic -fallow-argument-mismatch
  #JM: Following variable only used for file and directory names (I want to avoid the gnu version there)
  FCAUX = gfortran
  ## -fbounds-check sometimes causes a weird error due to non-lazy evaluation
  ## of boolean in gfortran.
- #FFLAGS= -fbounds-check -Wall -Wno-unused-variable -Wno-conversion -Wno-character-truncation #-Wimplicit-procedure 
- ## For floating point exception trapping  uncomment the following 
+ #FFLAGS= -fbounds-check -Wall -Wno-unused-variable -Wno-conversion -Wno-character-truncation #-Wimplicit-procedure
+ ## For floating point exception trapping  uncomment the following
 -##FPE=-ffpe-trap=invalid,zero,overflow
 +#######FPE=-ffpe-trap=invalid,zero,overflow
  ## gfortran 4.4.1 optimized with -O3 yields erroneous results
  ## Use -O2 to be on the safe side
- #OPT=-O3
- OPT=-O2
+-OPT=-O3
+-#OPT=-O2
++OPT=-O3
++#OPT=-O2
  #OPT=-O0
  ## For debugging uncomment the following
 -# #DEBUG=-ggdb #-pg
 +DEBUG=-ggdb #-pg
  ##
  endif
- 
+
 @@ -82,10 +84,10 @@
  LIBS = -limf
  FFLAGS =  -check #-warn all -module obj-$(COMPILER)/mod 
@@ -59,21 +62,16 @@ Index: Makefile
 +######DEBUG=-debug -g
  #PP=-fpp #-DHELAS_CHECK
  endif
- 
-@@ -105,11 +107,9 @@
+
+@@ -105,7 +106,7 @@
  # Path to chaplin installation
  #DIRCHAPLIN=$(HOME)/chaplin-1.2/install/lib/
- 
+
 -DIRCHAPLIN=/usr/local/lib/
 +DIRCHAPLIN=$(PWD)/lib
-+
- 
--ifeq ("$(USER)","nason")
--DIRCHAPLIN=/home/nason/Pheno/Local/lib/
--endif
- 
- # Path to OpenLoops installation
- #OLPATH=$(PWD)/../OpenLoopsStuff/OpenLoops
+
+ ifeq ("$(USER)","nason")
+ DIRCHAPLIN=/home/nason/Pheno/Local/lib/
 @@ -137,7 +137,7 @@
  #INCLUDE1=$(PWD)/include
  INCLUDE1=$(V2DIR)/include
@@ -156,11 +154,6 @@ Index: Makefile
  force_look :
  	true
  ######
-@@ -513,3 +514,4 @@
- pwhg_main.o: svn.version
- lhefwrite.o: svn.version
- LIBS+=-L/afs/cern.ch/work/a/azimermm/CMSSW_12_4_5/src/genproductions/bin/Powheg/my_ttJ_MiNNLO_new/POWHEG-BOX/ttJ_MiNNLO/lib/ -L/afs/cern.ch/work/a/azimermm/CMSSW_12_4_5/src/genproductions/bin/Powheg/my_ttJ_MiNNLO_new/POWHEG-BOX/ttJ_MiNNLO/lib64/
-+
 Index: Virtuals/makefile
 ===================================================================
 --- Virtuals/makefile	(revision 3997)

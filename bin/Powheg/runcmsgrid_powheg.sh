@@ -88,6 +88,10 @@ LHAPDF6TOOLFILE=$CMSSW_BASE/config/toolbox/$SCRAM_ARCH/tools/available/lhapdf6.x
 if [ -e $LHAPDF6TOOLFILE ]; then
   LHAPDFCONFIG=`cat $LHAPDF6TOOLFILE | grep "<environment name=\"LHAPDF6_BASE\"" | cut -d \" -f 4`/bin/lhapdf-config
 fi
+if [ "$process" == "ttJ_MiNNLO" ]; then
+  LHAPDFCONFIG=/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/lhapdf/6.3.0/bin/lhapdf-config
+  echo "For ttJ_MiNNLO LHAPDF_BASE is set to:" $LHAPDFCONFIG 
+fi
 #make sure env variable for pdfsets points to the right place
 export LHAPDF_DATA_PATH=`$LHAPDFCONFIG --datadir`
 # local pdf sets
@@ -170,6 +174,14 @@ if [ "$process" = "Z_ew-BMNNPV" ] || [ "$process" = "W_ew-BMNNP" ]; then
   # Photos matching removes weights, so we will calculate them afterwards
   sed -i '/rwl_file/d' powheg.input
 fi
+
+#### DEACTIVATES RWGT ####
+produceWeights="false"
+sed -i '/rwl_file/d' powheg.input
+sed -i '/rwl_group_events/d' powheg.input
+sed -i '/lhapdf6maxsets/d' powheg.input
+sed -i '/rwl_format_rwgt/d' powheg.input
+###############
 
 # Check if we are running with the "manyseeds" option
 manyseeds="false"
@@ -473,6 +485,10 @@ fi
 rm -rf powheg.input*
 
 echo -e "\n finished computing weights ..\n" 
+
+# Removing possible lines that contain characters incompatible with .xml 
+sed -i '/#--/d' ${file}_final.lhe
+sed -i '/#Random number generator exit values/d' ${file}_final.lhe
 
 xmllint --stream --noout ${file}_final.lhe > /dev/null 2>&1; test $? -eq 0 || fail_exit "xmllint integrity check failed on pwgevents.lhe"
 
