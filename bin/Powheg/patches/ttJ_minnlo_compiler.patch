@@ -277,146 +277,25 @@ Index: H2Stuff/virtgg.f
 ===================================================================
 --- H2Stuff/virtgg.f    (revision 3997)
 +++ H2Stuff/virtgg.f    (working copy)
-@@ -21,7 +21,7 @@
- C     Call high-energy expansion
- C
-          virtgg=beta*(1-beta**2)/4096/Pi*gghe(x,ms,nf)
--
-+
-       elseif(beta.lt.0.0125d0) then
+@@ -58,7 +58,7 @@
 
- C     Call threshold expansion
-@@ -29,11 +29,11 @@
-          virtgg=beta*(1-beta**2)/4096/Pi*ggth(beta,ctheta,nf)
-
-       else
--
-+
- C     Call interpolation
- C
-          call interpolgg(beta,ctheta,virtgg,nf)
--
-+
-       endif
-       return
-       end
-@@ -43,14 +43,14 @@
-       double precision x1,x2,x1a(1:80),x2a(1:42)
-       double precision ya(1:80,1:42),y2a(1:80,1:42)
-       double precision y,dy,dummy,nf
--      character*128 fullname,installdirname
-+      character*150 fullname,installdirname
-       character*32 name
-       integer n,m,i,j,nflav
-       save x1a,x2a,ya,y2a
-       logical ini
-       data ini/.true./
-       save ini
--
-+
-       nflav = NINT(real(nf))
-
-       m=80
-@@ -62,7 +62,8 @@
+       if (ini) then
+         if(nflav.eq.5) then
+-          open(unit=13,file='../H2Stuff/gridgg.dat',status='old',err=10)
++          open(unit=13,file='./H2Stuff/gridgg.dat',status='old',err=10)
            goto 20
-    10	  continue
+    10    continue
  C     next try using pre-defined environment variable
--          call getenv("ttjMiNNLOPATH", installdirname)
-+C          call getenv("ttjMiNNLOPATH", installdirname)
-+          installdirname='PROCESSDIR'
-           name='/H2Stuff/gridgg.dat'
-           fullname=installdirname(1:index(installdirname,' ')-1)//name
-           open(unit=13,file=fullname,status='old')
-@@ -74,19 +75,18 @@
-             read(13,*)x1a(i),x2a(j),ya(i,j),dummy
-           enddo
-         enddo
--
-+
-         close(13)
--
--C     Computes second derivatives
-+
-+C     Computes second derivatives
-         call splie2(x1a,x2a,ya,m,n,y2a)
--
-+
-         ini = .false.
-       endif
--
-+
- C     Performs interpolation
--
-+
-       call splin2(x1a,x2a,ya,y2a,m,n,x1,x2,y)
-
-       return
-       end
--
 Index: H2Stuff/virtqq.f
 ===================================================================
 --- H2Stuff/virtqq.f     (revision 3997)
 +++ H2Stuff/virtqq.f     (working copy)
-@@ -1,7 +1,7 @@
- C     Finite part of <M0|M2>+cc according to 1312.6279
- C     The normalisation is defined according to eqs. (3.6)
- C
--C     qqbar channel
-+C     qqbar channel
+@@ -57,7 +57,7 @@
 
-       double precision function virtqq(beta,ctheta)
-       implicit none
-@@ -42,14 +42,14 @@
-       double precision x1,x2,x1a(1:80),x2a(1:42)
-       double precision ya(1:80,1:42),y2a(1:80,1:42)
-       double precision y,dy,dummy,nf
--      character*128 fullname,installdirname
-+      character*150 fullname,installdirname
-       character*32 name
-       integer n,m,i,j,nflav
-       save x1a,x2a,ya,y2a
-       logical ini
-       data ini/.true./
-       save ini
--
-+
-       nflav = NINT(real(nf))
-
-       m=80
-@@ -61,7 +61,8 @@
+       if (ini) then
+         if(nflav.eq.5) then
+-          open(unit=11,file='../H2Stuff/gridqq.dat',status='old',err=10)
++          open(unit=11,file='./H2Stuff/gridqq.dat',status='old',err=10)
            goto 20
-    10	  continue
+    10    continue
  C     next try using pre-defined environment variable
--          call getenv("ttjMiNNLOPATH", installdirname)
-+C          call getenv("ttjMiNNLOPATH", installdirname)
-+          installdirname='PROCESSDIR'
-           name='/H2Stuff/gridqq.dat'
-           fullname=installdirname(1:index(installdirname,' ')-1)//name
-           open(unit=11,file=fullname,status='old')
-@@ -73,20 +74,18 @@
-             read(11,*)x1a(i),x2a(j),ya(i,j),dummy
-           enddo
-         enddo
--
-+
-         close(11)
--
--C     Computes second derivatives
-+
-+C     Computes second derivatives
-         call splie2(x1a,x2a,ya,m,n,y2a)
-
--        ini = .false.
-+        ini = .false.
-       endif
--
-+
- C     Performs interpolation
--
-+
-       call splin2(x1a,x2a,ya,y2a,m,n,x1,x2,y)
-
-       return
-       end
--
--

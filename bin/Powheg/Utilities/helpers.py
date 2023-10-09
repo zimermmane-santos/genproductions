@@ -463,11 +463,10 @@ LHAPDF_BASE=/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/lhapdf/6.3.0/\n \
 echo \"LHAPDF_BASE: ${LHAPDF_BASE}\"\n \
 cat Makefile.orig | sed -e \"s#LHAPDF_CONFIG=.\+#LHAPDF_CONFIG=${LHAPDF_BASE}bin/lhapdf-config#g\" > Makefile\n \
 patch -l -p0 -i ${WORKDIR}/patches/ttJ_minnlo_compiler.patch\n \
+mkdir ${WORKDIR}/${name}/H2Stuff/ \n \
 PROCESSDIR=\"${WORKDIR}/${name}/POWHEG-BOX/${process}\" \n \
-cat H2Stuff/virtgg.f | sed -e \"s#PROCESSDIR#${PROCESSDIR}#g\" > H2Stuff/virtgg.f.temp \n \
-cat H2Stuff/virtqq.f | sed -e \"s#PROCESSDIR#${PROCESSDIR}#g\" > H2Stuff/virtqq.f.temp \n \
-mv H2Stuff/virtgg.f.temp H2Stuff/virtgg.f \n \
-mv H2Stuff/virtqq.f.temp H2Stuff/virtqq.f",
+cp ${PROCESSDIR}/H2Stuff/gridgg.dat ${WORKDIR}/${name}/H2Stuff\n \
+cp ${PROCESSDIR}/H2Stuff/gridqq.dat ${WORKDIR}/${name}/H2Stuff\n,
 }.get(process,"")
 
 def runGetSource_patch_7(process) :
