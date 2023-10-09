@@ -466,7 +466,7 @@ patch -l -p0 -i ${WORKDIR}/patches/ttJ_minnlo_compiler.patch\n \
 mkdir ${WORKDIR}/${name}/H2Stuff/ \n \
 PROCESSDIR=\"${WORKDIR}/${name}/POWHEG-BOX/${process}\" \n \
 cp ${PROCESSDIR}/H2Stuff/gridgg.dat ${WORKDIR}/${name}/H2Stuff\n \
-cp ${PROCESSDIR}/H2Stuff/gridqq.dat ${WORKDIR}/${name}/H2Stuff,
+cp ${PROCESSDIR}/H2Stuff/gridqq.dat ${WORKDIR}/${name}/H2Stuff",
 }.get(process,"")
 
 def runGetSource_patch_7(process) :
