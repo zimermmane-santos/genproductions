@@ -273,29 +273,3 @@ Index: Virtuals/Reduction-1.1/makefile
 #  endif
  
 #  CFLAGS := $(CFLAGS) $(DEBUG) -fPIC
-Index: H2Stuff/virtgg.f
-===================================================================
---- H2Stuff/virtgg.f    (revision 3997)
-+++ H2Stuff/virtgg.f    (working copy)
-@@ -58,7 +58,7 @@
-
-       if (ini) then
-         if(nflav.eq.5) then
--          open(unit=13,file='../H2Stuff/gridgg.dat',status='old',err=10)
-+          open(unit=13,file='./H2Stuff/gridgg.dat',status='old',err=10)
-           goto 20
-    10    continue
- C     next try using pre-defined environment variable
-Index: H2Stuff/virtqq.f
-===================================================================
---- H2Stuff/virtqq.f     (revision 3997)
-+++ H2Stuff/virtqq.f     (working copy)
-@@ -57,7 +57,7 @@
-
-       if (ini) then
-         if(nflav.eq.5) then
--          open(unit=11,file='../H2Stuff/gridqq.dat',status='old',err=10)
-+          open(unit=11,file='./H2Stuff/gridqq.dat',status='old',err=10)
-           goto 20
-    10    continue
- C     next try using pre-defined environment variable

@@ -454,10 +454,6 @@ cd ..\n \
 echo \"LIBS+=-L`pwd`/lib/ -L`pwd`/lib64/\" >> Makefile   # be safe \n \
 export LD_LIBRARY_PATH=`pwd`/lib/:`pwd`/lib64/:${LD_LIBRARY_PATH} \n \
 echo \"Editing and compiling Makefiles in `pwd`\" \n \
-cp H2Stuff/virtgg.f  H2Stuff/virtgg.f.orig\n \
-cp H2Stuff/virtqq.f  H2Stuff/virtqq.f.orig\n \
-# cp H2Stuff/virtgg.f.orig  H2Stuff/virtgg.f\n \
-# cp H2Stuff/virtqq.f.orig  H2Stuff/virtqq.f\n \
 cp Makefile Makefile.orig\n \
 LHAPDF_BASE=/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/lhapdf/6.3.0/\n \
 echo \"LHAPDF_BASE: ${LHAPDF_BASE}\"\n \
